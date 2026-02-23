@@ -21,6 +21,8 @@
       --accent-dim: rgba(110,231,183,0.12);
       --accent-glow: rgba(110,231,183,0.25);
       --warm: #f0b860;
+      --blue: #8aa8ff;
+      --pink: #f0a0c0;
       --radius: 12px;
     }
 
@@ -35,7 +37,6 @@
       overflow-x: hidden;
     }
 
-    /* ── ambient background ── */
     body::before {
       content: '';
       position: fixed;
@@ -47,7 +48,6 @@
       z-index: 0;
     }
 
-    /* ── grid pattern overlay ── */
     body::after {
       content: '';
       position: fixed;
@@ -63,14 +63,14 @@
     .container {
       position: relative;
       z-index: 1;
-      max-width: 860px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
     /* ── header ── */
     header {
-      padding: 80px 0 48px;
+      padding: 72px 0 44px;
       text-align: center;
     }
 
@@ -82,7 +82,7 @@
       border-radius: 50%;
       background: var(--accent-dim);
       border: 1.5px solid rgba(110,231,183,0.2);
-      margin-bottom: 28px;
+      margin-bottom: 26px;
       animation: float 6s ease-in-out infinite;
     }
 
@@ -108,28 +108,40 @@
       color: var(--text-dim);
       font-size: 1.02rem;
       font-weight: 300;
-      max-width: 480px;
+      max-width: 520px;
       margin: 0 auto;
     }
 
-    /* ── notice bar ── */
+    /* ── notice ── */
     .notice {
       display: flex;
       align-items: flex-start;
       gap: 12px;
-      background: rgba(240,184,96,0.06);
-      border: 1px solid rgba(240,184,96,0.15);
       border-radius: var(--radius);
       padding: 16px 20px;
-      margin-bottom: 40px;
-      font-size: 0.9rem;
-      color: var(--warm);
-      line-height: 1.6;
+      margin-bottom: 20px;
+      font-size: 0.88rem;
+      line-height: 1.65;
     }
 
-    .notice svg {
-      flex-shrink: 0;
-      margin-top: 2px;
+    .notice svg { flex-shrink: 0; margin-top: 2px; }
+
+    .notice--warn {
+      background: rgba(240,184,96,0.06);
+      border: 1px solid rgba(240,184,96,0.15);
+      color: var(--warm);
+    }
+
+    .notice--tip {
+      background: rgba(110,231,183,0.05);
+      border: 1px solid rgba(110,231,183,0.12);
+      color: var(--accent);
+    }
+
+    .notice a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
     /* ── section titles ── */
@@ -141,15 +153,70 @@
       letter-spacing: 0.12em;
       color: var(--accent);
       margin-bottom: 20px;
+      margin-top: 48px;
       padding-left: 2px;
     }
+
+    .section-label:first-of-type { margin-top: 0; }
+
+    /* ── strength ranking ── */
+    .ranking {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin-bottom: 12px;
+    }
+
+    .ranking h3 {
+      font-size: 0.92rem;
+      font-weight: 500;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+
+    .rank-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+    }
+
+    .rank-bar + .rank-bar { border-top: 1px solid var(--border) }
+
+    .rank-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      width: 22px;
+      text-align: center;
+    }
+
+    .rank-num.gold { color: #fbbf24 }
+    .rank-num.silver { color: #94a3b8 }
+    .rank-num.bronze { color: #d97706 }
+    .rank-num.fourth { color: var(--text-dim) }
+
+    .rank-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .rank-tag {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+    .rank-star { color: #fbbf24; font-size: 0.72rem; margin-left: 4px; }
 
     /* ── weight cards ── */
     .weight-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-bottom: 56px;
+      margin-bottom: 12px;
     }
 
     .weight-card {
@@ -161,11 +228,15 @@
       animation: fadeUp 0.5s ease both;
     }
 
+    .weight-card.recommended {
+      border-color: rgba(110,231,183,0.25);
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(110,231,183,0.03) 100%);
+    }
+
     .weight-card:nth-child(1) { animation-delay: 0.05s }
     .weight-card:nth-child(2) { animation-delay: 0.10s }
     .weight-card:nth-child(3) { animation-delay: 0.15s }
     .weight-card:nth-child(4) { animation-delay: 0.20s }
-    .weight-card:nth-child(5) { animation-delay: 0.25s }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(14px) }
@@ -178,20 +249,26 @@
       box-shadow: 0 0 0 1px var(--border-accent), 0 8px 32px rgba(0,0,0,0.25);
     }
 
+    .weight-card.recommended:hover {
+      border-color: rgba(110,231,183,0.35);
+      box-shadow: 0 0 0 1px rgba(110,231,183,0.2), 0 8px 32px rgba(0,0,0,0.25);
+    }
+
     .card-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       margin-bottom: 10px;
     }
 
     .card-name {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1rem;
+      font-size: 0.88rem;
       font-weight: 500;
       color: var(--text);
+      word-break: break-all;
     }
 
     .card-badges {
@@ -202,11 +279,12 @@
 
     .badge {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       font-weight: 500;
       padding: 3px 10px;
       border-radius: 100px;
       letter-spacing: 0.03em;
+      white-space: nowrap;
     }
 
     .badge--size {
@@ -217,21 +295,36 @@
 
     .badge--net {
       background: rgba(99,140,255,0.08);
-      color: #8aa8ff;
+      color: var(--blue);
       border: 1px solid rgba(99,140,255,0.15);
     }
 
-    .badge--new {
+    .badge--rec {
       background: rgba(240,184,96,0.1);
       color: var(--warm);
       border: 1px solid rgba(240,184,96,0.18);
     }
 
+    .badge--author {
+      background: rgba(240,160,192,0.08);
+      color: var(--pink);
+      border: 1px solid rgba(240,160,192,0.15);
+    }
+
     .card-desc {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--text-dim);
       margin-bottom: 16px;
+      line-height: 1.7;
     }
+
+    .card-desc a {
+      color: var(--blue);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .card-desc a:hover { text-decoration: underline }
 
     .card-bottom {
       display: flex;
@@ -242,7 +335,7 @@
     }
 
     .card-meta {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-dim);
       font-family: 'JetBrains Mono', monospace;
     }
@@ -272,13 +365,88 @@
 
     .btn-download svg { width: 15px; height: 15px; }
 
-    /* ── usage section ── */
+    /* ── test results ── */
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .test-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .test-card:hover {
+      border-color: var(--border-accent);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.2);
+    }
+
+    .test-img-slot {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #161924 0%, #1a1e2a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .test-img-slot::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(45deg, rgba(255,255,255,0.015) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,0.015) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.015) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.015) 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
+
+    .test-img-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      position: relative;
+      z-index: 1;
+    }
+
+    .placeholder-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .placeholder-inner svg {
+      display: block;
+      margin: 0 auto 8px;
+      opacity: 0.4;
+    }
+
+    .test-card-label {
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    /* ── usage ── */
     .usage-box {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 24px;
-      margin-bottom: 56px;
+      margin-bottom: 14px;
     }
 
     .usage-box h3 {
@@ -287,22 +455,42 @@
       margin-bottom: 14px;
     }
 
+    .usage-box p {
+      font-size: 0.86rem;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+      line-height: 1.65;
+    }
+
     .code-block {
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 16px 20px;
+      padding-right: 64px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       line-height: 1.8;
       color: var(--text-dim);
       overflow-x: auto;
       position: relative;
+      margin-top: 10px;
     }
 
+    .code-block + .code-block { margin-top: 10px }
     .code-block .cmd { color: var(--accent) }
-    .code-block .flag { color: #8aa8ff }
+    .code-block .flag { color: var(--blue) }
     .code-block .path { color: var(--warm) }
+    .code-block .cmt { color: #555a6e; font-style: italic }
+
+    .code-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 16px;
+      margin-bottom: 6px;
+      opacity: 0.7;
+    }
 
     .copy-btn {
       position: absolute;
@@ -318,34 +506,29 @@
       transition: all 0.2s;
     }
 
-    .copy-btn:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
+    .copy-btn:hover { color: var(--accent); border-color: var(--accent) }
 
     /* ── footer ── */
     footer {
       padding: 40px 0 60px;
+      margin-top: 48px;
       text-align: center;
       font-size: 0.82rem;
       color: var(--text-dim);
       border-top: 1px solid var(--border);
     }
 
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
+    footer a { color: var(--accent); text-decoration: none }
     footer a:hover { text-decoration: underline }
 
-    /* ── responsive ── */
     @media (max-width: 600px) {
-      header { padding: 56px 0 36px }
-      h1 { font-size: 1.6rem }
-      .weight-card { padding: 18px }
+      header { padding: 52px 0 32px }
+      h1 { font-size: 1.55rem }
+      .weight-card { padding: 16px }
       .card-top { flex-direction: column; align-items: flex-start }
       .card-bottom { flex-direction: column; align-items: flex-start }
+      .test-grid { grid-template-columns: 1fr }
+      .rank-tag { display: none }
     }
   </style>
 </head>
@@ -357,148 +540,247 @@
   <header>
     <div class="logo-mark">
       <svg viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="1.5">
-        <circle cx="12" cy="12" r="10" />
-        <circle cx="8" cy="9" r="2" fill="#6ee7b7" stroke="none" />
-        <circle cx="16" cy="15" r="2" fill="#6ee7b7" stroke="none" />
-        <circle cx="15" cy="8" r="1.2" fill="none" stroke="#6ee7b7" />
-        <circle cx="9" cy="16" r="1.2" fill="none" stroke="#6ee7b7" />
+        <circle cx="12" cy="12" r="10"/>
+        <circle cx="8" cy="9" r="2" fill="#6ee7b7" stroke="none"/>
+        <circle cx="16" cy="15" r="2" fill="#6ee7b7" stroke="none"/>
+        <circle cx="15" cy="8" r="1.2" fill="none" stroke="#6ee7b7"/>
+        <circle cx="9" cy="16" r="1.2" fill="none" stroke="#6ee7b7"/>
       </svg>
     </div>
     <h1>KataGo 私人权重下载</h1>
-    <p>个人训练的 KataGo 神经网络权重文件，持续更新中</p>
+    <p>社区训练的 KataGo 神经网络权重，涵盖多种架构与训练方案</p>
   </header>
 
-  <!-- Notice -->
-  <div class="notice">
+  <!-- Notices -->
+  <div class="notice notice--warn">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
     </svg>
-    <span>这些权重为个人训练版本，仅供学习与研究使用。请配合对应版本的 KataGo 引擎使用。</span>
+    <span>这些权重为社区个人训练版本，仅供学习与研究使用。请配合对应版本的 KataGo 引擎使用。</span>
+  </div>
+
+  <div class="notice notice--tip">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/>
+    </svg>
+    <span><strong>首推 b18tfrs (Transformer)</strong> — 仅 122MB，棋力最强且架构最先进。需搭配 <a href="https://github.com/hzyhhzy/KataGomo_fork/tree/onnx-general" target="_blank">KataGomo fork (onnx-general)</a> 使用。</span>
+  </div>
+
+  <!-- Strength Ranking -->
+  <div class="section-label">// 棋力排名</div>
+  <div class="ranking">
+    <h3>当前权重棋力参考排序（强 → 弱）</h3>
+    <div class="rank-bar">
+      <span class="rank-num gold">1</span>
+      <span class="rank-name">b18tfrs — 智子 Transformer</span>
+      <span class="rank-tag">b18 · 122MB · ONNX</span>
+      <span class="rank-star">★ 首推</span>
+    </div>
+    <div class="rank-bar">
+      <span class="rank-num silver">2</span>
+      <span class="rank-name">congxin — 从心 混血</span>
+      <span class="rank-tag">b28c512nbt · 258MB</span>
+    </div>
+    <div class="rank-bar">
+      <span class="rank-num bronze">3</span>
+      <span class="rank-name">fd13h — 智子 速降LR</span>
+      <span class="rank-tag">b28c512nbt · 258MB</span>
+    </div>
+    <div class="rank-bar">
+      <span class="rank-num fourth">4</span>
+      <span class="rank-name">FMSWA — 凤鸣 混血</span>
+      <span class="rank-tag">b28c512nbt · 258MB</span>
+    </div>
   </div>
 
   <!-- Weight List -->
-  <div class="section-label">// 可用权重</div>
-  <div class="weight-list" id="weightList">
-    <!-- Cards will be rendered by JS -->
+  <div class="section-label">// 权重下载</div>
+  <div class="weight-list">
+
+    <!-- #1 b18tfrs — Recommended -->
+    <div class="weight-card recommended">
+      <div class="card-top">
+        <span class="card-name">b18c384h12tfrs_1_fd2-s3268823040-d1410226031.onnx</span>
+        <div class="card-badges">
+          <span class="badge badge--rec">★ 首推</span>
+          <span class="badge badge--net">b18tfrs</span>
+          <span class="badge badge--size">~122 MB</span>
+          <span class="badge badge--author">智子</span>
+        </div>
+      </div>
+      <div class="card-desc">
+        Transformer 架构 b18tfrs 权重，轻量化且棋力最强，代表当前最先进的训练成果。<br/>
+        ⚠️ 需搭配 <a href="https://github.com/hzyhhzy/KataGomo_fork/tree/onnx-general" target="_blank">KataGomo fork (onnx-general 分支)</a> 使用，不兼容官方 KataGo。
+      </div>
+      <div class="card-bottom">
+        <span class="card-meta">2026-02-22 · ONNX 格式</span>
+        <a class="btn-download" href="https://github.com/kataxq/kataxq.github.io/releases/download/weights/b18c384h12tfrs_1_fd2-s3268823040-d1410226031.onnx" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          下载
+        </a>
+      </div>
+    </div>
+
+    <!-- #2 congxin -->
+    <div class="weight-card">
+      <div class="card-top">
+        <span class="card-name">congxin-260217.bin.gz</span>
+        <div class="card-badges">
+          <span class="badge badge--net">b28c512nbt</span>
+          <span class="badge badge--size">~258 MB</span>
+          <span class="badge badge--author">从心</span>
+        </div>
+      </div>
+      <div class="card-desc">从心的 b28c512nbt 混血权重，在公开权重中棋力仅次于 Transformer 架构，综合表现优秀。</div>
+      <div class="card-bottom">
+        <span class="card-meta">2026-02-22 · bin.gz 格式</span>
+        <a class="btn-download" href="https://github.com/kataxq/kataxq.github.io/releases/download/weights/congxin-260217.bin.gz" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          下载
+        </a>
+      </div>
+    </div>
+
+    <!-- #3 fd13h -->
+    <div class="weight-card">
+      <div class="card-top">
+        <span class="card-name">fd13h_zhizi.bin.gz</span>
+        <div class="card-badges">
+          <span class="badge badge--net">b28c512nbt</span>
+          <span class="badge badge--size">~258 MB</span>
+          <span class="badge badge--author">智子</span>
+        </div>
+      </div>
+      <div class="card-desc">智子训练的速降 Learning Rate b28c512nbt 权重，稳定性好，适合日常使用。</div>
+      <div class="card-bottom">
+        <span class="card-meta">2026-02-22 · bin.gz 格式</span>
+        <a class="btn-download" href="https://github.com/kataxq/kataxq.github.io/releases/download/weights/fd13h_zhizi.bin.gz" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          下载
+        </a>
+      </div>
+    </div>
+
+    <!-- #4 FMSWA -->
+    <div class="weight-card">
+      <div class="card-top">
+        <span class="card-name">FMSWA11.4514.bin.gz</span>
+        <div class="card-badges">
+          <span class="badge badge--net">b28c512nbt</span>
+          <span class="badge badge--size">~258 MB</span>
+          <span class="badge badge--author">凤鸣</span>
+        </div>
+      </div>
+      <div class="card-desc">凤鸣的 b28c512nbt 混血权重，FMSWA 混血策略，可作为备选方案。</div>
+      <div class="card-bottom">
+        <span class="card-meta">2026-02-22 · bin.gz 格式</span>
+        <a class="btn-download" href="https://github.com/kataxq/kataxq.github.io/releases/download/weights/FMSWA11.4514.bin.gz" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          下载
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Test Results -->
+  <div class="section-label">// 测试结果</div>
+  <div class="test-grid">
+
+    <div class="test-card">
+      <div class="test-img-slot">
+        <img src="https://kataxq.github.io/images/test1.png" alt="测试结果">
+      </div>
+      <div class="test-card-label">测试对局结果 1</div>
+    </div>
+
+    <div class="test-card">
+      <div class="test-img-slot">
+        <img src="https://kataxq.github.io/images/test2.png" alt="测试结果">
+      </div>
+      <div class="test-card-label">测试对局结果 2</div>
+    </div>
+
+    <div class="test-card">
+      <div class="test-img-slot">
+        <img src="https://kataxq.github.io/images/elo.png" alt="Elo 对比">
+      </div>
+      <div class="test-card-label">Elo 评分对比</div>
+    </div>
+
+    <div class="test-card">
+      <div class="test-img-slot">
+        <img src="https://kataxq.github.io/images/training.png" alt="训练曲线">
+      </div>
+      <div class="test-card-label">训练曲线</div>
+    </div>
+
   </div>
 
   <!-- Usage -->
   <div class="section-label">// 使用方法</div>
+
   <div class="usage-box">
-    <h3>配置 KataGo 使用自定义权重</h3>
-    <div class="code-block" id="codeBlock">
-      <button class="copy-btn" onclick="copyCode()">复制</button>
-      <span class="cmd">./katago</span> gtp \<br/>
-      &nbsp;&nbsp;<span class="flag">-model</span> <span class="path">/path/to/your-weight.bin.gz</span> \<br/>
-      &nbsp;&nbsp;<span class="flag">-config</span> <span class="path">/path/to/gtp.cfg</span>
+    <h3>标准 bin.gz 权重（从心 / 智子速降LR / 凤鸣）</h3>
+    <p>直接配合官方 KataGo 使用：</p>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<span class="cmd">./katago</span> gtp
+  <span class="flag">-model</span> <span class="path">congxin-260217.bin.gz</span>
+  <span class="flag">-config</span> <span class="path">gtp_example.cfg</span>
+    </div>
+  </div>
+
+  <div class="usage-box">
+    <h3>Transformer ONNX 权重（b18tfrs · 首推）</h3>
+    <p>需要使用 KataGomo fork 的 onnx-general 分支编译的引擎：</p>
+    <div class="code-label">1. 克隆并编译</div>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<span class="cmd">git clone</span> <span class="flag">-b</span> onnx-general <span class="path">https://github.com/hzyhhzy/KataGomo_fork.git</span>
+<br><span class="cmd">cd</span> KataGomo_fork/cpp
+<br><span class="cmd">cmake</span> . <span class="flag">-DUSE_BACKEND=TENSORRT -DBUILD_DISTRIBUTED=0</span>
+<br><span class="cmd">make -j 4</span>
+    </div>
+    <div class="code-label">2. 运行</div>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<span class="cmd">./katago</span> gtp
+  <span class="flag">-model</span> <span class="path">b18c384h12tfrs_1_fd2-s3268823040-d1410226031.onnx</span>
+  <span class="flag">-config</span> <span class="path">gtp_example.cfg</span>
     </div>
   </div>
 
   <!-- Footer -->
   <footer>
-    <p>Powered by GitHub Pages · <a href="https://github.com/lightvector/KataGo" target="_blank">KataGo 官方仓库</a></p>
-    <p style="margin-top:6px;font-size:0.75rem;opacity:0.6;">最后更新：2026-02</p>
+    <p>
+      <a href="https://github.com/lightvector/KataGo" target="_blank">KataGo 官方</a> ·
+      <a href="https://github.com/hzyhhzy/KataGomo_fork" target="_blank">KataGomo Fork</a> ·
+      <a href="https://katagotraining.org/" target="_blank">KataGo 分布式训练</a> ·
+      Hosted on <a href="https://github.com/kataxq/kataxq.github.io" target="_blank">GitHub Pages</a>
+    </p>
+    <p style="margin-top:8px;font-size:0.75rem;opacity:0.5;">最后更新：2026-02-22</p>
   </footer>
 
 </div>
 
 <script>
-  // ============================================================
-  //  配置区 —— 在此修改你的权重列表
-  //  owner: 你的 GitHub 用户名
-  //  repo:  你的 GitHub 仓库名
-  //  weights: 权重条目数组
-  // ============================================================
-  const CONFIG = {
-    owner: "your-github-username",       // ← 改成你的用户名
-    repo:  "your-repo-name",             // ← 改成你的仓库名
-    branch: "main",                      // ← 分支名 (通常是 main)
-    weights: [
-      {
-        name: "kata-b18c384-s1200m.bin.gz",
-        path: "weights/kata-b18c384-s1200m.bin.gz",   // 仓库内路径
-        net:  "b18c384",
-        size: "~1.2 GB",
-        date: "2026-02-20",
-        desc: "18 block 384 channel，大网络高精度，适合深度分析",
-        isNew: true,
-      },
-      {
-        name: "kata-b18c384-s800m.bin.gz",
-        path: "weights/kata-b18c384-s800m.bin.gz",
-        net:  "b18c384",
-        size: "~1.2 GB",
-        date: "2026-02-10",
-        desc: "18 block 384 channel，上一版本",
-        isNew: false,
-      },
-      {
-        name: "kata-b6c96-s600m.bin.gz",
-        path: "weights/kata-b6c96-s600m.bin.gz",
-        net:  "b6c96",
-        size: "~18 MB",
-        date: "2026-01-28",
-        desc: "6 block 96 channel，轻量级网络，适合快速对弈和低配设备",
-        isNew: false,
-      },
-      {
-        name: "kata-b15c192-s900m.bin.gz",
-        path: "weights/kata-b15c192-s900m.bin.gz",
-        net:  "b15c192",
-        size: "~180 MB",
-        date: "2026-01-15",
-        desc: "15 block 192 channel，中等网络，平衡速度与精度",
-        isNew: false,
-      },
-    ],
-  };
-
-  // ============================================================
-  //  渲染逻辑
-  // ============================================================
-  function getDownloadUrl(weight) {
-    // GitHub raw 文件链接
-    return `https://github.com/${CONFIG.owner}/${CONFIG.repo}/raw/${CONFIG.branch}/${weight.path}`;
-  }
-
-  function renderWeights() {
-    const container = document.getElementById('weightList');
-    container.innerHTML = CONFIG.weights.map(w => `
-      <div class="weight-card">
-        <div class="card-top">
-          <span class="card-name">${w.name}</span>
-          <div class="card-badges">
-            ${w.isNew ? '<span class="badge badge--new">NEW</span>' : ''}
-            <span class="badge badge--net">${w.net}</span>
-            <span class="badge badge--size">${w.size}</span>
-          </div>
-        </div>
-        <div class="card-desc">${w.desc}</div>
-        <div class="card-bottom">
-          <span class="card-meta">${w.date}</span>
-          <a class="btn-download" href="${getDownloadUrl(w)}" download>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            下载
-          </a>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function copyCode() {
-    const text = `./katago gtp -model /path/to/your-weight.bin.gz -config /path/to/gtp.cfg`;
+  function copyCode(btn) {
+    const block = btn.parentElement;
+    const text = block.textContent.replace('复制', '').replace('已复制 ✓', '').trim();
     navigator.clipboard.writeText(text).then(() => {
-      const btn = document.querySelector('.copy-btn');
       btn.textContent = '已复制 ✓';
       setTimeout(() => btn.textContent = '复制', 1500);
     });
   }
-
-  renderWeights();
 </script>
 
 </body>
